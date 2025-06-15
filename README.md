@@ -12,3 +12,7 @@ Put plugin dll from [releases](https://github.com/CosmosZvezdo4kin/KnowYourCorou
 |killcoroutine        |Kills coroutine by Id             |`kyc.killcoroutine`               |
 |pausecoroutine       |Pauses coroutine by Id            |`kyc.pausecoroutine`              |
 |resumecoroutine      |Resumes coroutine by Id           |`kyc.resumecoroutine`             |
+# How to get coroutine Id ?
+Use `getcoroutines <subcommand here>`
+
+![Id Location](https://i.imgur.com/krKmx0N.png)
