@@ -56,13 +56,11 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Commands\GetCoroutines\All.cs" />
-        <Compile Include="Commands\GetCoroutines\Running.cs" />
-        <Compile Include="Commands\GetCoroutines\GetCoroutinesParent.cs" />
-        <Compile Include="Commands\GetCoroutines\Paused.cs" />
-        <Compile Include="Commands\KillCoroutine.cs" />
-        <Compile Include="Commands\PauseCoroutine.cs" />
-        <Compile Include="Commands\ResumeCoroutine.cs" />
+        <Compile Include="Commands\CoroutineParent.cs" />
+        <Compile Include="Commands\Kill.cs" />
+        <Compile Include="Commands\List.cs" />
+        <Compile Include="Commands\Pause.cs" />
+        <Compile Include="Commands\Resume.cs" />
         <Compile Include="Core.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>

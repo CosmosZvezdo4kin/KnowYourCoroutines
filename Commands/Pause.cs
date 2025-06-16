@@ -6,14 +6,13 @@ using MEC;
 
 namespace KnowYourCoroutines.Commands;
 
-[CommandHandler(typeof(RemoteAdminCommandHandler))]
-public class ResumeCoroutine : ICommand, IUsageProvider
+public class Pause : ICommand, IUsageProvider
 {
-    public string Command => "resumecoroutine";
+    public string Command => "pause";
 
     public string[] Aliases => Array.Empty<string>();
 
-    public string Description => "Resumes coroutine";
+    public string Description => "Pauses coroutine by Id";
     
     public string[] Usage => new string[] { "Id" };
     
@@ -27,16 +26,16 @@ public class ResumeCoroutine : ICommand, IUsageProvider
         
         if (arguments.Count < 1)
         {
-            response = "You must provide coroutine id";
+            response = $"You must provide coroutine id\nUsage: {Command} {this.DisplayCommandUsage()}";
             return false;
         }
         
         if (!int.TryParse(arguments.At(0), out var coroutineId))
         {
-            response = "Invalid coroutine id (must be integer)";
+            response = $"Invalid coroutine id (must be integer)\nUsage: {Command} {this.DisplayCommandUsage()}";
             return false;
         }
-        
+
         var coroutine = Timing._instance._indexToHandle.FirstOrDefault(x => x.Value._id == coroutineId && x.Value.IsValid).Value;
         
         if (!coroutine.IsValid)
@@ -45,15 +44,15 @@ public class ResumeCoroutine : ICommand, IUsageProvider
             return false;
         }
 
-        if (!coroutine.IsAliveAndPaused)
+        if (coroutine.IsAliveAndPaused)
         {
-            response = "Coroutine is not paused";
+            response = "Coroutine is already paused";
             return false;
         }
 
-        Timing.ResumeCoroutines(coroutine);
+        Timing.PauseCoroutines(coroutine);
 
-        response = "Successfully resumed coroutine!";
+        response = "Successfully paused coroutine!";
         return true;
     }
 }

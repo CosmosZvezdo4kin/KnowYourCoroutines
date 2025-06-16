@@ -6,14 +6,13 @@ using MEC;
 
 namespace KnowYourCoroutines.Commands;
 
-[CommandHandler(typeof(RemoteAdminCommandHandler))]
-public class KillCoroutine : ICommand, IUsageProvider
+public class Resume : ICommand, IUsageProvider
 {
-    public string Command => "killcoroutine";
+    public string Command => "resume";
 
     public string[] Aliases => Array.Empty<string>();
 
-    public string Description => "Kills coroutine";
+    public string Description => "Resumes coroutine by Id";
     
     public string[] Usage => new string[] { "Id" };
     
@@ -24,30 +23,36 @@ public class KillCoroutine : ICommand, IUsageProvider
             response = $"You don't have permission to execute this command. Required permission: kyc.{Command}";
             return false;
         }
-
+        
         if (arguments.Count < 1)
         {
-            response = "You must provide coroutine id";
+            response = $"You must provide coroutine id\nUsage: {Command} {this.DisplayCommandUsage()}";
             return false;
         }
-
+        
         if (!int.TryParse(arguments.At(0), out var coroutineId))
         {
-            response = "Invalid coroutine id (must be integer)";
+            response = $"Invalid coroutine id (must be integer)\nUsage: {Command} {this.DisplayCommandUsage()}";
             return false;
         }
-
+        
         var coroutine = Timing._instance._indexToHandle.FirstOrDefault(x => x.Value._id == coroutineId && x.Value.IsValid).Value;
-
+        
         if (!coroutine.IsValid)
         {
             response = "Invalid coroutine";
             return false;
         }
 
-        Timing.KillCoroutines(coroutine);
+        if (!coroutine.IsAliveAndPaused)
+        {
+            response = "Coroutine is not paused";
+            return false;
+        }
 
-        response = "Successfully killed coroutine!";
+        Timing.ResumeCoroutines(coroutine);
+
+        response = "Successfully resumed coroutine!";
         return true;
     }
 }

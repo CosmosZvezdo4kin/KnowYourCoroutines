@@ -4,15 +4,34 @@ This is a simple plugin for LabAPI that adds some useful commands for debugging 
 # Installation
 Put plugin dll from [releases](https://github.com/CosmosZvezdo4kin/KnowYourCoroutines/releases/latest) in `LabAPI/plugins/...`
 # Commands
-|Command              |Description                       |Required Permission               |
-|---------------------|----------------------------------|----------------------------------|
-|getcoroutines all    |Get list of all coroutines        |`kyc.getcoroutines.all`           |
-|getcoroutines paused |Get list of all paused coroutines |`kyc.getcoroutines.paused`        |
-|getcoroutines running|Get list of all running coroutines|`kyc.getcoroutines.running`       |
-|killcoroutine        |Kills coroutine by Id             |`kyc.killcoroutine`               |
-|pausecoroutine       |Pauses coroutine by Id            |`kyc.pausecoroutine`              |
-|resumecoroutine      |Resumes coroutine by Id           |`kyc.resumecoroutine`             |
-# How to get coroutine Id ?
-Use `getcoroutines <subcommand here>`
+| Command          | Description                        | Arguments                              | Required Permission |
+|------------------|------------------------------------|----------------------------------------|---------------------|
+| coroutine list   | Get list of coroutines by category | (All / Running / Paused) \<GetFields\> | `kyc.list`          |
+| coroutine kill   | Kills coroutine by Id              | (Id)                                   | `kyc.kill`          |
+| coroutine pause  | Pauses coroutine by Id             | (Id)                                   | `kyc.pause`         |
+| coroutine resume | Resumes coroutine by Id            | (Id)                                   | `kyc.resume`        |
 
-![Id Location](https://i.imgur.com/krKmx0N.png)
+# Example of usage
+* `coroutine list all` - gets a list of all valid coroutines
+* `coroutine list paused` - gets a list of all paused coroutines
+* `coroutine list all true` - gets a list of all valid coroutines with their fields
+* `coroutine kill 5` - kills coroutine with Id 5 if it is valid
+
+# FAQ
+> **How to get coroutine Id ?** 
+> 
+> Use `coroutines list <category here>`
+>
+> ![Id Location](https://i.imgur.com/7VpBil6.png)
+
+> **How to find out the name of the coroutine method from the `CancelWith` method ?** 
+> 
+> Use `coroutines list <category here> true`
+> 
+> ![Field Location](https://i.imgur.com/QYRlN79.png)
+
+> **What is this plugin for ?**
+> 
+> For more accurate debugging of MEC coroutines. And the purposes of such debugging can be as follows:
+> * Check for unnecessary duplicate coroutines
+> * Check the TPS costs of a coroutine
