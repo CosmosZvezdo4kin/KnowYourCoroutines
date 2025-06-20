@@ -15,7 +15,7 @@ public class List : ICommand, IUsageProvider
 
     public string Description => "Get list of coroutines by category";
     
-    public string[] Usage => new string[] { "all/running/paused", "GetFields <true/false>" };
+    public string[] Usage => new string[] { "all/valid/running/paused/invalid", "GetFields <true/false>" };
     
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -46,11 +46,17 @@ public class List : ICommand, IUsageProvider
         switch (coroutinesCategory)
         {
             case "all": break;
+            case "valid":
+                coroutinesList = coroutinesList.Where(x => x.Value.IsValid).ToList();
+                break;
             case "running":
                 coroutinesList = coroutinesList.Where(x => x.Value.IsRunning).ToList();
                 break;
             case "paused":
                 coroutinesList = coroutinesList.Where(x => x.Value.IsAliveAndPaused).ToList();
+                break;
+            case "invalid":
+                coroutinesList = coroutinesList.Where(x => !x.Value.IsValid).ToList();
                 break;
             default:
                 response = $"An unknown category of coroutines has been entered: {coroutinesCategory}\nUsage:{Command} {this.DisplayCommandUsage()}";
@@ -61,23 +67,26 @@ public class List : ICommand, IUsageProvider
 
         var coroutinesStringList = coroutinesList.Select(x =>
         {
+            var processIndex = x.Key;
+            var coroutine = x.Value;
+            
             var fields = string.Empty;
 
             if (shouldGetFields)
             {
-                var instance = Timing.GetInstance(x.Value.Key);
+                var instance = Timing.GetInstance(coroutine.Key);
+                
+                var enumerator = instance?.CoindexPeek(processIndex);
 
-                if (instance != null && instance._handleToIndex.ContainsKey(x.Value))
+                if (enumerator != null)
                 {
-                    var enumerator = instance.CoindexPeek(instance._handleToIndex[x.Value]);
-
                     var currentType = enumerator.GetType();
                     
-                    fields = "\n- " + string.Join("\n- ", currentType.GetFields().Select(x => $"{x.Name} ({x.FieldType}): {x.GetValue(enumerator)}"));
+                    fields = string.Join(string.Empty, currentType.GetFields().Select(x => $"\n- {x.Name} ({x.FieldType}): {x.GetValue(enumerator)}"));
                 }
             }
 
-            return shouldUseRichText ? $"<color=red>{x.Value._id}</color> {x.Value} {fields}" : $"{x.Value._id} {x.Value} {fields}";
+            return shouldUseRichText ? $"<color=red>{coroutine._id}</color> <color=green>{processIndex.ToSafeString()}</color> {coroutine.ToSafeString()} {fields}" : $"{coroutine._id} {processIndex.ToSafeString()} {coroutine.ToSafeString()} {fields}";
         });
 
         var result = string.Join("\n", coroutinesStringList);
