@@ -11,9 +11,9 @@ public class Core : Plugin
 
     public override string Author => "CosmosZvezdochkin";
 
-    public override Version Version => new(1, 0, 3);
+    public override Version Version => new(1, 0, 4);
 
-    public override Version RequiredApiVersion => new(1, 0, 2);
+    public override Version RequiredApiVersion => new(1, 1, 1);
     
     public override void Enable()
     {
