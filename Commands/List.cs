@@ -4,6 +4,7 @@ using CommandSystem;
 using LabApi.Features.Permissions;
 using MEC;
 using RemoteAdmin;
+using UnityEngine;
 
 namespace KnowYourCoroutines.Commands;
 
@@ -45,7 +46,8 @@ public class List : ICommand, IUsageProvider
 
         switch (coroutinesCategory)
         {
-            case "all": break;
+            case "all": 
+                break;
             case "valid":
                 coroutinesList = coroutinesList.Where(x => x.Value.IsValid).ToList();
                 break;
@@ -82,7 +84,20 @@ public class List : ICommand, IUsageProvider
                 {
                     var currentType = enumerator.GetType();
                     
-                    fields = string.Join(string.Empty, currentType.GetFields().Select(x => $"\n- {x.Name} ({x.FieldType}): {x.GetValue(enumerator)}"));
+                    fields = string.Join(string.Empty, currentType.GetFields().Select(field =>
+                    {
+                        var fieldValue = field.GetValue(enumerator);
+                        
+                        switch (fieldValue)
+                        {
+                            case Delegate del:
+                                return $"\n- {field.Name} ({field.FieldType}): Name: {del.Method.DeclaringType?.FullName}.{del.Method.Name}, Target: {del.Target}";
+                            case GameObject gameObject:
+                                return $"\n- {field.Name} ({field.FieldType}): Name: {gameObject.name}, Tag: {gameObject.tag}";
+                            default:
+                                return $"\n- {field.Name} ({field.FieldType}): {fieldValue?.ToString() ?? "null"}";
+                        }
+                    }));
                 }
             }
 
