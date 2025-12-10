@@ -214,7 +214,7 @@ public class MecUpdate
                         }
                     }));
                     
-                    LabApi.Features.Console.Logger.Error($"[MEC COROUTINE] Segment.{segment} {ex.Message} EXCEPTION CAUGHT ({processes[i]}):{fields}");
+                    LabApi.Features.Console.Logger.Error($"[MEC COROUTINE] Segment.{segment} {ex.Message} EXCEPTION CAUGHT ({enumerator}):{fields}");
                 }
                 
                 if (Singleton.Config.LogCoroutineException)
