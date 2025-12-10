@@ -14,7 +14,7 @@ The config is located at `LabAPI/configs/.../KnowYourCoroutines/config.yml`
 | Config Name                   | Description                                                                                                                                                                  | Default value |
 |-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
 | patch_methods                 | Patches some MEC methods to fix bugs and improve error tracking. Without enabling this config, the configs below will not work.                                              | false         |
-| log_coroutine_error           | Enables logging coroutine errors (shows the name of the coroutine and its fields)<br/><br/>![Error Log Example](https://i.postimg.cc/dVQhG0dp/chrome-RFDAc8x-Pfl.png)        | true          |
+| log_coroutine_error           | Enables logging coroutine errors (shows the name of the coroutine and its fields)<br/><br/>![Error Log Example](https://images4.imagebam.com/90/e3/01/ME18MLIO_o.png)        | true          |
 | log_coroutine_exception       | Enables logging coroutine exceptions (the default exception logging system in Unity)<br/><br/>![Exception Log Example](https://images4.imagebam.com/40/76/68/ME18MLCH_o.png) | true          |
 | kill_coroutine_on_exception   | The name speaks for itself                                                                                                                                                   | true          |
 
