@@ -36,23 +36,26 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="0Harmony">
+          <HintPath>$(EXILED_REFERENCES)\0Harmony.dll</HintPath>
+        </Reference>
         <Reference Include="Assembly-CSharp">
-          <HintPath>E:\Dependencies\Assembly-CSharp.dll</HintPath>
+          <HintPath>$(EXILED_REFERENCES)\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
-          <HintPath>E:\Dependencies\Assembly-CSharp-firstpass-publicized.dll</HintPath>
+          <HintPath>$(EXILED_REFERENCES)\Assembly-CSharp-firstpass-publicized.dll</HintPath>
         </Reference>
         <Reference Include="CommandSystem.Core">
-          <HintPath>E:\Dependencies\CommandSystem.Core.dll</HintPath>
+          <HintPath>$(EXILED_REFERENCES)\CommandSystem.Core.dll</HintPath>
         </Reference>
         <Reference Include="LabApi">
-          <HintPath>E:\Dependencies\LabApi.dll</HintPath>
+          <HintPath>$(EXILED_REFERENCES)\LabApi.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
         <Reference Include="UnityEngine.CoreModule">
-          <HintPath>E:\Dependencies\UnityEngine.CoreModule.dll</HintPath>
+          <HintPath>$(EXILED_REFERENCES)\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
@@ -61,8 +64,12 @@
         <Compile Include="Commands\List.cs" />
         <Compile Include="Commands\Pause.cs" />
         <Compile Include="Commands\Resume.cs" />
+        <Compile Include="Config.cs" />
         <Compile Include="Core.cs" />
         <Compile Include="Extensions.cs" />
+        <Compile Include="Patches\MecRemoveGraffiti.cs" />
+        <Compile Include="Patches\MecRemoveUnused.cs" />
+        <Compile Include="Patches\MecUpdate.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>

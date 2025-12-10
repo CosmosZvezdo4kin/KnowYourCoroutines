@@ -1,10 +1,23 @@
 ![](https://i.postimg.cc/Rh9gn8b2/cf34dbb9-1e62-4ba5-b228-5a733648c375.png)
 
 # KnowYourCoroutines
-This is a simple plugin for LabAPI that adds some useful commands for debugging MEC coroutines
-> **⚠️ Warning:** Familiarize yourself with the principles of MEC coroutines before using the commands.
+This is a simple plugin for LabAPI that adds some useful commands for debugging MEC coroutines, fixes bugs in the MEC library, and allows you to track coroutine exceptions
+> **⚠️ Warning:** Familiarize yourself with the principles of MEC coroutines before using the plugin
 # Installation
 Put plugin dll from [releases](https://github.com/CosmosZvezdo4kin/KnowYourCoroutines/releases/latest) in `LabAPI/plugins/...`
+
+Put `0Harmony.dll` from [releases](https://github.com/CosmosZvezdo4kin/KnowYourCoroutines/releases/latest) in `LabAPI/dependencies/...`
+# Config
+
+The config is located at `LabAPI/configs/.../KnowYourCoroutines/config.yml`
+
+| Config Name                   | Description                                                                                                                                                                  | Default value |
+|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| patch_methods                 | Patches some MEC methods to fix bugs and improve error tracking. Without enabling this config, the configs below will not work.                                              | false         |
+| log_coroutine_error           | Enables logging coroutine errors (shows the name of the coroutine and its fields)<br/><br/>![Error Log Example](https://i.postimg.cc/dVQhG0dp/chrome-RFDAc8x-Pfl.png)        | true          |
+| log_coroutine_exception       | Enables logging coroutine exceptions (the default exception logging system in Unity)<br/><br/>![Exception Log Example](https://images4.imagebam.com/40/76/68/ME18MLCH_o.png) | true          |
+| kill_coroutine_on_exception   | The name speaks for itself                                                                                                                                                   | true          |
+
 # Commands
 | Command          | Description                        | Arguments                              | Required Permission |
 |------------------|------------------------------------|----------------------------------------|---------------------|
@@ -21,6 +34,11 @@ Put plugin dll from [releases](https://github.com/CosmosZvezdo4kin/KnowYourCorou
 * `coroutine kill 5` - kills coroutine with Id 5 if it is valid
 
 # FAQ
+> **How to enable coroutine exception tracking ?**
+>
+> Go to the plugin configuration folder at `LabAPI/configs/.../KnowYourCoroutines/` and enable the necessary settings in the `config.yml` file
+>
+
 > **How to get coroutine Id ?** 
 > 
 > Use `coroutines list <category here>`
@@ -35,6 +53,7 @@ Put plugin dll from [releases](https://github.com/CosmosZvezdo4kin/KnowYourCorou
 
 > **What is this plugin for ?**
 > 
-> For more accurate debugging of MEC coroutines. And the purposes of such debugging can be as follows:
+> For fixing errors in MEC library and more accurate debugging of MEC coroutines. And the purposes of such debugging can be as follows:
 > * Check for unnecessary duplicate coroutines
 > * Check the TPS costs of a coroutine
+> * Track exceptions in coroutines
